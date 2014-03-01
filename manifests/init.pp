@@ -36,7 +36,7 @@
 # Copyright 2013 Your name here, unless otherwise noted.
 #
 
-class nodejs ($nodejsversion = "v0.10.15", $nodecleanup = "true") {
+class nodejs ($nodejsversion = "v0.10.26", $nodecleanup = "true") {
   case $::operatingsystem {
     'Ubuntu' : {
       $requiredpackages = ["build-essentials", "python", "libssl-dev", "git", "python-software-properties"]
@@ -45,7 +45,7 @@ class nodejs ($nodejsversion = "v0.10.15", $nodecleanup = "true") {
       # Please clone, copy-n-paste, test and send a pull request if it works.
     }
     'CentOS' : {
-      $requiredpackages = ["kernel-devel", "kernel-headers", "python", "openssl-devel", "git"]
+      $requiredpackages = ["kernel-devel", "kernel-headers", "python", "openssl-devel", "git", "gcc-c++"]
 
       package {$requiredpackages:
         ensure => present,
@@ -67,7 +67,7 @@ class nodejs ($nodejsversion = "v0.10.15", $nodecleanup = "true") {
         creates => "/usr/local/bin/node",
       } ->
 
-      notify { "Build & install nodejs": } ->
+      notify { "Build & Install Node.js": } ->
 
       exec { "compile-nodejs":
         command => "/tmp/node-${nodejsversion}/configure && sudo make && sudo make install",
